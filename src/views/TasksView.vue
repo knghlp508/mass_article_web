@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import AppSidebar from '../components/AppSidebar.vue'
+
+const router = useRouter()
 
 const tasks = ref([
   {
@@ -20,6 +23,10 @@ const tasks = ref([
     createdAt: '2024-02-08 14:20'
   }
 ])
+
+const goToArticles = (taskId: number) => {
+  router.push({ name: 'articles', params: { taskId } })
+}
 </script>
 
 <template>
@@ -44,7 +51,7 @@ const tasks = ref([
             </div>
           </div>
           <div class="task-actions">
-            <button class="btn-icon">
+            <button class="btn-icon" @click="goToArticles(task.id)">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>

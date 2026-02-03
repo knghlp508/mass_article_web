@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import AppSidebar from '../components/AppSidebar.vue'
+
+const router = useRouter()
+
+const goBack = () => {
+  router.back()
+}
 
 interface App {
   id: number
@@ -23,6 +30,11 @@ const apps = ref<App[]>([
 ])
 
 const selectedApps = ref<number[]>([])
+
+const handleSubmit = () => {
+  // In real app, you would submit the data to the backend here
+  router.push('/success')
+}
 </script>
 
 <template>
@@ -31,6 +43,11 @@ const selectedApps = ref<number[]>([])
     <div class="main-content">
       <header class="page-header">
         <div class="header-left">
+          <button class="btn-back" @click="goBack">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
           <h1>应用管理</h1>
           <p>选择群发应用</p>
         </div>
@@ -72,7 +89,7 @@ const selectedApps = ref<number[]>([])
         </div>
         <div class="submit-right">
           <button class="btn">全选</button>
-          <button class="btn btn-primary" :disabled="selectedApps.length === 0">确认提交</button>
+          <button class="btn btn-primary" @click="handleSubmit" :disabled="selectedApps.length === 0">确认提交</button>
         </div>
       </div>
     </div>
@@ -101,6 +118,12 @@ const selectedApps = ref<number[]>([])
   align-items: center;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .header-left h1 {
   font-size: 32px;
   font-weight: 700;
@@ -112,6 +135,24 @@ const selectedApps = ref<number[]>([])
   font-size: 14px;
   color: var(--text-secondary);
   margin: 8px 0 0 0;
+}
+
+.btn-back {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.btn-back:hover {
+  background: var(--bg-hover);
 }
 
 .apps-grid {
